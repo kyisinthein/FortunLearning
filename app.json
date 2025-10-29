@@ -1,15 +1,38 @@
 {
   "expo": {
-    "name": "FortunLearning",
-    "slug": "FortunLearning",
+    "name": "Fortun Learning",
+    "slug": "fortunlearning",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "fortunlearning",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
+    "description": "Learn Chinese Bazi (Four Pillars) astrology with AI-powered interpretations. Discover your destiny through traditional wisdom enhanced by modern technology.",
+    "keywords": [
+      "bazi",
+      "astrology",
+      "chinese",
+      "fortune",
+      "ai",
+      "learning",
+      "four pillars",
+      "destiny"
+    ],
+    "privacy": "public",
+    "platforms": [
+      "ios",
+      "android"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.fortunlearning.app",
+      "buildNumber": "1",
+      "infoPlist": {
+        "NSCameraUsageDescription": "This app does not use the camera.",
+        "NSMicrophoneUsageDescription": "This app does not use the microphone.",
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -18,8 +41,13 @@
         "backgroundImage": "./assets/images/android-icon-background.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
+      "package": "com.fortunlearning.app",
+      "versionCode": 1,
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "permissions": [
+        "INTERNET"
+      ]
     },
     "web": {
       "output": "static",
@@ -38,11 +66,26 @@
             "backgroundColor": "#000000"
           }
         }
+      ],
+      [
+        "react-native-google-mobile-ads",
+        {
+          "androidAppId": "ca-app-pub-3940256099942544~3347511713",
+          "iosAppId": "ca-app-pub-3940256099942544~1458002511",
+          "userTrackingUsageDescription": "This identifier is used to deliver relevant ads."
+        }
       ]
     ],
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "DEEPSEEK_API_KEY": "sk-8e8b3cf59fb74f49be40ce28c96ccf49",
+      "router": {},
+      "eas": {
+        "projectId": "77796612-8fa9-458b-a6f7-d6730be8ebd4"
+      }
     }
   }
 }
