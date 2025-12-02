@@ -1,6 +1,5 @@
 import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
-import React from 'react';
 import { StyleSheet } from 'react-native';
 import { ThemedText } from './themed-text';
 import { ThemedView } from './themed-view';
@@ -56,7 +55,15 @@ export function BaziChart({ chartData, birthDate, gender }: BaziChartProps) {
   const hourPillar = getPillarInfo(chartData?.hourPillar);
 
   return (
-    <ThemedView style={[styles.container, { backgroundColor: Colors[colorScheme ?? 'light'].background === '#fff' ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.1)' }]}>
+    <ThemedView style={[
+      styles.container,
+      {
+        backgroundColor:
+          Colors[colorScheme ?? 'light'].background === '#fff'
+            ? 'rgba(245,246,250,0.85)'
+            : 'rgba(30,32,36,0.85)',
+      },
+    ]}>
       <ThemedText type="defaultSemiBold" style={styles.title}>🏛️ Four Pillars Chart</ThemedText>
       
       {/* Birth Information */}
@@ -125,29 +132,35 @@ export function BaziChart({ chartData, birthDate, gender }: BaziChartProps) {
 const styles = StyleSheet.create({
   container: {
     padding: 20,
-    borderRadius: 16,
+    borderRadius: 20,
     borderWidth: 1,
-    borderColor: 'rgba(0,0,0,0.1)',
+    borderColor: 'rgba(0,0,0,0.12)',
+    shadowColor: '#000',
+    shadowOpacity: 0.08,
+    shadowRadius: 12,
+    shadowOffset: { width: 0, height: 6 },
+    elevation: 2,
   },
   title: {
-    fontSize: 20,
-    marginBottom: 16,
+    fontSize: 22,
+    marginBottom: 12,
     textAlign: 'center',
   },
   birthInfo: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginBottom: 20,
+    justifyContent: 'space-between',
+    marginBottom: 16,
     paddingVertical: 10,
-    backgroundColor: 'rgba(0,0,0,0.05)',
-    borderRadius: 8,
+    paddingHorizontal: 12,
+    backgroundColor: 'rgba(0,0,0,0.04)',
+    borderRadius: 12,
   },
   birthText: {
     fontSize: 14,
     fontWeight: '500',
   },
   pillarsContainer: {
-    marginBottom: 16,
+    marginBottom: 12,
   },
   pillarLabels: {
     flexDirection: 'row',
@@ -176,14 +189,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   stemCell: {
-    backgroundColor: 'rgba(255,99,71,0.2)',
+    backgroundColor: 'rgba(255,99,71,0.18)',
+    borderWidth: 1,
+    borderColor: 'rgba(255,99,71,0.35)',
   },
   branchCell: {
-    backgroundColor: 'rgba(30,144,255,0.2)',
+    backgroundColor: 'rgba(30,144,255,0.18)',
+    borderWidth: 1,
+    borderColor: 'rgba(30,144,255,0.35)',
   },
   pillarText: {
-    fontSize: 16,
-    fontWeight: 'bold',
+    fontSize: 18,
+    fontWeight: '700',
   },
   rowLabels: {
     flexDirection: 'row',
@@ -191,17 +208,17 @@ const styles = StyleSheet.create({
   rowLabelText: {
     flex: 1,
     textAlign: 'center',
-    fontSize: 12,
-    color: '#888',
+    fontSize: 13,
+    color: '#667',
     fontStyle: 'italic',
   },
   dayMasterContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 16,
+    paddingTop: 14,
     borderTopWidth: 1,
-    borderTopColor: 'rgba(0,0,0,0.1)',
+    borderTopColor: 'rgba(0,0,0,0.08)',
     gap: 8,
   },
   dayMasterLabel: {
@@ -209,8 +226,8 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   dayMasterValue: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#0066CC',
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#005BBB',
   },
 });

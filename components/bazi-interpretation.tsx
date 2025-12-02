@@ -1,6 +1,5 @@
 import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
-import React from 'react';
 import { StyleSheet } from 'react-native';
 import { ThemedText } from './themed-text';
 import { ThemedView } from './themed-view';
@@ -52,8 +51,7 @@ export function BaziInterpretation({ interpretation, dailyInsight }: BaziInterpr
 
   return (
     <ThemedView style={styles.container}>
-      {/* AI Interpretation Sections */}
-      <ThemedView style={[styles.interpretationContainer, { backgroundColor: Colors[colorScheme ?? 'light'].background === '#fff' ? 'rgba(0,100,200,0.08)' : 'rgba(0,100,200,0.15)' }]}>
+      <ThemedView style={[styles.interpretationContainer, { backgroundColor: Colors[colorScheme ?? 'light'].background === '#fff' ? 'rgba(230,240,255,0.9)' : 'rgba(20,40,70,0.6)' }]}>
         <ThemedText type="defaultSemiBold" style={styles.mainTitle}>🤖 AI Interpretation</ThemedText>
         {sections.map((section, index) => (
           <ThemedView key={index} style={styles.section}>
@@ -68,10 +66,9 @@ export function BaziInterpretation({ interpretation, dailyInsight }: BaziInterpr
           </ThemedView>
         ))}
       </ThemedView>
-      {/* Daily Insight */}
       {dailyInsight && (
-        <ThemedView style={[styles.dailyContainer, { backgroundColor: Colors[colorScheme ?? 'light'].background === '#fff' ? 'rgba(255,193,7,0.1)' : 'rgba(255,193,7,0.2)' }]}>
-          <ThemedText type="defaultSemiBold" style={styles.dailyTitle}>🌟 Today's Insight</ThemedText>
+        <ThemedView style={[styles.dailyContainer, { backgroundColor: Colors[colorScheme ?? 'light'].background === '#fff' ? 'rgba(255,238,200,0.9)' : 'rgba(110,80,10,0.5)' }]}>
+          <ThemedText type="defaultSemiBold" style={styles.dailyTitle}>🌟 Today&apos;s Insight</ThemedText>
           <ThemedText style={styles.dailyText}>
             {sanitizeText(dailyInsight)}
           </ThemedText>
@@ -84,46 +81,58 @@ export function BaziInterpretation({ interpretation, dailyInsight }: BaziInterpr
 const styles = StyleSheet.create({
   container: {
     gap: 16,
+    maxWidth: 560,
+    alignSelf: 'center',
   },
   interpretationContainer: {
-    padding: 20,
-    borderRadius: 16,
+    padding: 22,
+    borderRadius: 20,
     borderWidth: 1,
-    borderColor: 'rgba(0,100,200,0.2)',
+    borderColor: 'rgba(90,140,200,0.25)',
+    shadowColor: '#000',
+    shadowOpacity: 0.08,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 6 },
+    elevation: 2,
   },
   mainTitle: {
-    fontSize: 20,
-    marginBottom: 16,
+    fontSize: 22,
+    marginBottom: 14,
     textAlign: 'center',
   },
   section: {
-    marginBottom: 16,
+    marginBottom: 14,
   },
   sectionTitle: {
-    fontSize: 16,
+    fontSize: 17,
     marginBottom: 8,
-    color: '#0066CC',
+    color: '#005BBB',
   },
   sectionContent: {
-    fontSize: 15,
-    lineHeight: 22,
-    marginBottom: 8,
+    fontSize: 16,
+    lineHeight: 24,
+    marginBottom: 10,
   },
   dailyContainer: {
     padding: 20,
-    borderRadius: 16,
+    borderRadius: 20,
     borderWidth: 1,
-    borderColor: 'rgba(255,193,7,0.3)',
+    borderColor: 'rgba(255,180,0,0.35)',
+    shadowColor: '#000',
+    shadowOpacity: 0.08,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 6 },
+    elevation: 2,
   },
   dailyTitle: {
-    fontSize: 18,
+    fontSize: 19,
     marginBottom: 12,
     textAlign: 'center',
     color: '#FF8C00',
   },
   dailyText: {
-    fontSize: 15,
-    lineHeight: 22,
+    fontSize: 16,
+    lineHeight: 24,
     textAlign: 'center',
     fontStyle: 'italic',
   },
