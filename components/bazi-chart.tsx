@@ -161,6 +161,9 @@ const styles = StyleSheet.create({
   },
   pillarsContainer: {
     marginBottom: 12,
+    borderRadius: 16,
+    overflow: 'hidden',
+    paddingVertical: 8,
   },
   pillarLabels: {
     flexDirection: 'row',
@@ -216,18 +219,21 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 14,
-    borderTopWidth: 1,
-    borderTopColor: 'rgba(0,0,0,0.08)',
-    gap: 8,
+    paddingVertical: 10, 
+    paddingHorizontal: 16, 
+    borderRadius: 12,  
+    backgroundColor: 'rgba(0,0,0,0.04)', 
+    gap: 6,  
   },
   dayMasterLabel: {
     fontSize: 14,
-    fontWeight: '500',
+    fontWeight: '500', 
+    lineHeight: 20,
   },
   dayMasterValue: {
     fontSize: 18,
     fontWeight: '700',
     color: '#005BBB',
+    lineHeight: 20, 
   },
 });
