@@ -27,10 +27,28 @@ export function BaziInterpretation({ interpretation, dailyInsight }: BaziInterpr
     const lines = text.split('\n').filter(line => line.trim());
     
     let currentSection = { title: '', content: [] as string[] };
+
+    const looksLikeTitle = (line: string) => {
+      const trimmed = line.trim();
+
+      // Title is short (<= 6 words)
+      if (trimmed.split(' ').length > 6) return false;
+
+      // Titles usually do NOT end with punctuation
+      if (/[.!?]$/.test(trimmed)) return false;
+
+      // Paragraphs are usually longer and contain commas
+      if (trimmed.includes(',')) return false;
+
+      // Starts with uppercase (English or Chinese)
+      if (!/^[A-Z\u4E00-\u9FFF]/.test(trimmed)) return false;
+
+      return true;
+    };
     
     for (const line of lines) {
-      // Check if line looks like a section header (contains numbers or keywords)
-      if (line.match(/^\d+\.|personality|character|strength|talent|growth|guidance|advice/i)) {
+      if (looksLikeTitle(line)) {
+        // Save previous section
         if (currentSection.title) {
           sections.push(currentSection);
         }
@@ -102,16 +120,19 @@ const styles = StyleSheet.create({
   },
   section: {
     marginBottom: 14,
+    backgroundColor: 'transparent',
   },
   sectionTitle: {
     fontSize: 17,
     marginBottom: 8,
     color: '#005BBB',
+    backgroundColor: 'transparent',
   },
   sectionContent: {
     fontSize: 16,
     lineHeight: 24,
     marginBottom: 10,
+    backgroundColor: 'transparent',
   },
   dailyContainer: {
     padding: 20,
