@@ -163,7 +163,8 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     borderRadius: 16,
     overflow: 'hidden',
-    paddingVertical: 8,
+    paddingVertical: 12,
+    paddingHorizontal: 12,
   },
   pillarLabels: {
     flexDirection: 'row',
