@@ -81,7 +81,13 @@ export function BaziInterpretation({ interpretation, dailyInsight }: BaziInterpr
         <ThemedText type="defaultSemiBold" style={styles.mainTitle}>🤖 AI Interpretation</ThemedText>
         {sections.map((section, index) => (
           <ThemedView key={index} style={styles.section}>
-            <ThemedText type="defaultSemiBold" style={styles.sectionTitle}>
+            <ThemedText
+              type="defaultSemiBold"
+              style={[
+                styles.sectionTitle,
+                section.title === 'Analyzing...' ? { textAlign: 'center', marginTop: 10 } : undefined,
+              ]}
+            >
               {section.title}
             </ThemedText>
             {section.content.map((paragraph, pIndex) => (
