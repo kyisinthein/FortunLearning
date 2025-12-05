@@ -121,6 +121,7 @@ const styles = StyleSheet.create({
     marginTop: 12,
     gap: 16,
     maxWidth: 560,
+    width: '100%',
     alignSelf: 'center',
   },
   secondaryBtn: {

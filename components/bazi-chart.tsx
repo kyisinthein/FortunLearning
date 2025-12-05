@@ -140,6 +140,7 @@ const styles = StyleSheet.create({
     shadowRadius: 12,
     shadowOffset: { width: 0, height: 6 },
     elevation: 2,
+    width: '100%',
   },
   title: {
     fontSize: 22,
@@ -161,6 +162,10 @@ const styles = StyleSheet.create({
   },
   pillarsContainer: {
     marginBottom: 12,
+    borderRadius: 16,
+    overflow: 'hidden',
+    paddingVertical: 12,
+    paddingHorizontal: 12,
   },
   pillarLabels: {
     flexDirection: 'row',
@@ -216,18 +221,21 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 14,
-    borderTopWidth: 1,
-    borderTopColor: 'rgba(0,0,0,0.08)',
-    gap: 8,
+    paddingVertical: 10, 
+    paddingHorizontal: 16, 
+    borderRadius: 12,  
+    backgroundColor: 'rgba(0,0,0,0.04)', 
+    gap: 6,  
   },
   dayMasterLabel: {
     fontSize: 14,
-    fontWeight: '500',
+    fontWeight: '500', 
+    lineHeight: 20,
   },
   dayMasterValue: {
     fontSize: 18,
     fontWeight: '700',
     color: '#005BBB',
+    lineHeight: 20, 
   },
 });

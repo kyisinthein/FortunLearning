@@ -102,6 +102,8 @@ export default function HomeScreen() {
   );
 }
 
+const FIELD_WIDTH = 150;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -126,11 +128,12 @@ const styles = StyleSheet.create({
   formRow: {
     flexDirection: 'row',
     gap: 12,
-    justifyContent: 'space-between',
+    justifyContent: 'center',
   },
   formField: {
-    flex: 1,
+    width: FIELD_WIDTH,
     gap: 6,
+    alignItems: 'center',
   },
   label: {
     fontWeight: '600',
@@ -141,11 +144,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   genderBtn: {
+    width: FIELD_WIDTH,
     paddingVertical: 10,
     paddingHorizontal: 16,
     borderRadius: 12,
     borderWidth: 1,
     borderColor: Colors.light.border,
+    alignItems: 'center',
   },
   genderBtnActive: {
     backgroundColor: 'rgba(0,100,200,0.1)',
@@ -161,6 +166,8 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     borderRadius: 16,
     alignItems: 'center',
+    width: FIELD_WIDTH * 2 + 12,
+    alignSelf: 'center',
   },
   calcText: {
     color: '#fff',

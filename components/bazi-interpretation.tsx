@@ -27,10 +27,36 @@ export function BaziInterpretation({ interpretation, dailyInsight }: BaziInterpr
     const lines = text.split('\n').filter(line => line.trim());
     
     let currentSection = { title: '', content: [] as string[] };
+
+    const looksLikeTitle = (line: string) => {
+      const trimmed = line.trim();
+
+      // Reject common generic words
+      const genericTitles = ['analysis', 'introduction', 'overview', 'summary'];
+      if (genericTitles.includes(trimmed.toLowerCase())) return false;
+
+      // A real section title usually has at least 2 words
+      const words = trimmed.split(' ');
+      if (words.length < 2) return false;
+
+      // Titles should NOT end with punctuation
+      if (/[.!?]$/.test(trimmed)) return false;
+
+      // Titles should not contain commas
+      if (trimmed.includes(',')) return false;
+
+      // Should start with uppercase (English or Chinese)
+      if (!/^[A-Z\u4E00-\u9FFF]/.test(trimmed)) return false;
+
+      // Limit length to avoid full paragraph false-positives
+      if (trimmed.split(' ').length > 8) return false;
+
+      return true;
+    };
     
     for (const line of lines) {
-      // Check if line looks like a section header (contains numbers or keywords)
-      if (line.match(/^\d+\.|personality|character|strength|talent|growth|guidance|advice/i)) {
+      if (looksLikeTitle(line)) {
+        // Save previous section
         if (currentSection.title) {
           sections.push(currentSection);
         }
@@ -44,7 +70,7 @@ export function BaziInterpretation({ interpretation, dailyInsight }: BaziInterpr
       sections.push(currentSection);
     }
     
-    return sections.length > 0 ? sections : [{ title: 'Analysis', content: [text] }];
+    return sections.length > 0 ? sections : [{ title: 'Analyzing...', content: [text] }];
   };
 
   const sections = parseInterpretation(sanitizeText(interpretation));
@@ -83,6 +109,7 @@ const styles = StyleSheet.create({
     gap: 16,
     maxWidth: 560,
     alignSelf: 'center',
+    width: '100%',
   },
   interpretationContainer: {
     padding: 22,
@@ -94,6 +121,7 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     shadowOffset: { width: 0, height: 6 },
     elevation: 2,
+    width: '100%',
   },
   mainTitle: {
     fontSize: 22,
@@ -102,16 +130,19 @@ const styles = StyleSheet.create({
   },
   section: {
     marginBottom: 14,
+    backgroundColor: 'transparent',
   },
   sectionTitle: {
     fontSize: 17,
     marginBottom: 8,
     color: '#005BBB',
+    backgroundColor: 'transparent',
   },
   sectionContent: {
     fontSize: 16,
     lineHeight: 24,
     marginBottom: 10,
+    backgroundColor: 'transparent',
   },
   dailyContainer: {
     padding: 20,
@@ -123,6 +154,7 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     shadowOffset: { width: 0, height: 6 },
     elevation: 2,
+    width: '100%',
   },
   dailyTitle: {
     fontSize: 19,
