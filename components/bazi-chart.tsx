@@ -140,6 +140,7 @@ const styles = StyleSheet.create({
     shadowRadius: 12,
     shadowOffset: { width: 0, height: 6 },
     elevation: 2,
+    width: '100%',
   },
   title: {
     fontSize: 22,

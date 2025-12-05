@@ -70,7 +70,7 @@ export function BaziInterpretation({ interpretation, dailyInsight }: BaziInterpr
       sections.push(currentSection);
     }
     
-    return sections.length > 0 ? sections : [{ title: 'Analysis', content: [text] }];
+    return sections.length > 0 ? sections : [{ title: 'Analyzing...', content: [text] }];
   };
 
   const sections = parseInterpretation(sanitizeText(interpretation));
@@ -109,6 +109,7 @@ const styles = StyleSheet.create({
     gap: 16,
     maxWidth: 560,
     alignSelf: 'center',
+    width: '100%',
   },
   interpretationContainer: {
     padding: 22,
@@ -120,6 +121,7 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     shadowOffset: { width: 0, height: 6 },
     elevation: 2,
+    width: '100%',
   },
   mainTitle: {
     fontSize: 22,
@@ -152,6 +154,7 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     shadowOffset: { width: 0, height: 6 },
     elevation: 2,
+    width: '100%',
   },
   dailyTitle: {
     fontSize: 19,
