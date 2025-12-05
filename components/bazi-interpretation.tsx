@@ -31,17 +31,25 @@ export function BaziInterpretation({ interpretation, dailyInsight }: BaziInterpr
     const looksLikeTitle = (line: string) => {
       const trimmed = line.trim();
 
-      // Title is short (<= 6 words)
-      if (trimmed.split(' ').length > 6) return false;
+      // Reject common generic words
+      const genericTitles = ['analysis', 'introduction', 'overview', 'summary'];
+      if (genericTitles.includes(trimmed.toLowerCase())) return false;
 
-      // Titles usually do NOT end with punctuation
+      // A real section title usually has at least 2 words
+      const words = trimmed.split(' ');
+      if (words.length < 2) return false;
+
+      // Titles should NOT end with punctuation
       if (/[.!?]$/.test(trimmed)) return false;
 
-      // Paragraphs are usually longer and contain commas
+      // Titles should not contain commas
       if (trimmed.includes(',')) return false;
 
-      // Starts with uppercase (English or Chinese)
+      // Should start with uppercase (English or Chinese)
       if (!/^[A-Z\u4E00-\u9FFF]/.test(trimmed)) return false;
+
+      // Limit length to avoid full paragraph false-positives
+      if (trimmed.split(' ').length > 8) return false;
 
       return true;
     };
