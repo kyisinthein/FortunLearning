@@ -143,8 +143,8 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   title: {
-    fontSize: 22,
-    marginBottom: 12,
+    fontSize: 20,
+    marginBottom: 23,
     textAlign: 'center',
   },
   birthInfo: {

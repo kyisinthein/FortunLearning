@@ -7,9 +7,10 @@ import { ThemedView } from './themed-view';
 interface BaziInterpretationProps {
   interpretation: string;
   dailyInsight?: string;
+  loading?: boolean;
 }
 
-export function BaziInterpretation({ interpretation, dailyInsight }: BaziInterpretationProps) {
+export function BaziInterpretation({ interpretation, dailyInsight, loading }: BaziInterpretationProps) {
   const colorScheme = useColorScheme();
   
   const sanitizeText = (text: string) => {
@@ -70,7 +71,9 @@ export function BaziInterpretation({ interpretation, dailyInsight }: BaziInterpr
       sections.push(currentSection);
     }
     
-    return sections.length > 0 ? sections : [{ title: 'Analyzing...', content: [text] }];
+    return sections.length > 0
+      ? sections
+      : [loading ? { title: 'Analyzing...', content: [] } : { title: 'Interpretation', content: [text] }];
   };
 
   const sections = parseInterpretation(sanitizeText(interpretation));
@@ -78,14 +81,14 @@ export function BaziInterpretation({ interpretation, dailyInsight }: BaziInterpr
   return (
     <ThemedView style={styles.container}>
       <ThemedView style={[styles.interpretationContainer, { backgroundColor: Colors[colorScheme ?? 'light'].background === '#fff' ? 'rgba(230,240,255,0.9)' : 'rgba(20,40,70,0.6)' }]}>
-        <ThemedText type="defaultSemiBold" style={styles.mainTitle}>🤖 AI Interpretation</ThemedText>
+        <ThemedText type="defaultSemiBold" style={styles.mainTitle}>Your Destiny Reading</ThemedText>
         {sections.map((section, index) => (
           <ThemedView key={index} style={styles.section}>
             <ThemedText
               type="defaultSemiBold"
               style={[
                 styles.sectionTitle,
-                section.title === 'Analyzing...' ? { textAlign: 'center', marginTop: 10 } : undefined,
+                section.title === 'Analyzing...' ? { textAlign: 'center' } : undefined,
               ]}
             >
               {section.title}
@@ -130,7 +133,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   mainTitle: {
-    fontSize: 22,
+    fontSize: 20,
     marginBottom: 14,
     textAlign: 'center',
   },

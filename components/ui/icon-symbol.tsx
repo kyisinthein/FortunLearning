@@ -20,6 +20,9 @@ const MAPPING = {
   'chevron.right': 'chevron-right',
   'calendar': 'calendar-today',
   'clock': 'access-time',
+  'person.fill': 'person',
+  'sun.max.fill': 'wb-sunny',
+  'moon.fill': 'dark-mode',
 } as IconMapping;
 
 /**
@@ -41,4 +44,3 @@ export function IconSymbol({
 }) {
   return <MaterialIcons color={color} size={size} name={MAPPING[name]} style={style} />;
 }
-

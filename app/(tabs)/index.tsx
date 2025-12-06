@@ -2,12 +2,13 @@ import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { IconSymbol } from '@/components/ui/icon-symbol';
 import { Colors, Fonts } from '@/constants/theme';
+import { useThemeController } from '@/hooks/theme-controller';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { formatInTimeZone, toDate } from 'date-fns-tz';
 import { useRouter } from 'expo-router';
 import { useCallback, useMemo, useState } from 'react';
-import { ActivityIndicator, Modal, Platform, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Modal, Platform, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 type Gender = 'male' | 'female';
@@ -16,8 +17,10 @@ export default function HomeScreen() {
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const theme = useColorScheme() ?? 'light';
+  const { mode, toggle } = useThemeController();
   const [date, setDate] = useState<Date>(new Date());
   const [time, setTime] = useState<Date>(new Date());
+  const [name, setName] = useState<string>('');
   const [gender, setGender] = useState<Gender>('male');
   const [calculating, setCalculating] = useState(false);
   const [showDatePicker, setShowDatePicker] = useState(false);
@@ -36,11 +39,11 @@ export default function HomeScreen() {
     setCalculating(true);
     try {
       const birthISO = formatInTimeZone(birthDate, tz, "yyyy-MM-dd'T'HH:mm:ss");
-      router.push({ pathname: '/result', params: { birthISO, tz, gender } });
+      router.push({ pathname: '/result', params: { birthISO, tz, gender, name } });
     } finally {
       setCalculating(false);
     }
-  }, [birthDate, gender, tz, router]);
+  }, [birthDate, gender, tz, name, router]);
 
   const formatDate = useCallback((d: Date) => {
     return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
@@ -56,10 +59,13 @@ export default function HomeScreen() {
       <View style={styles.header}>
         <ThemedText type="title" style={{ fontFamily: Fonts.rounded, fontSize: 26, lineHeight: 30 }}>Fortun Learning</ThemedText>
         <ThemedText style={{ textAlign: 'center', marginTop: 4 }}>Discover Your Bazi Destiny</ThemedText>
+        <TouchableOpacity accessibilityRole="button" onPress={toggle} style={styles.themeIconBtn}>
+          <IconSymbol name={mode === 'dark' ? 'sun.max.fill' : 'moon.fill'} size={20} color={Colors[theme].icon} />
+        </TouchableOpacity>
       </View>
 
       <ThemedView style={styles.card}>
-        <ThemedText type="subtitle" style={styles.cardTitle}>Birth Information</ThemedText>
+        <ThemedText type="subtitle" style={styles.cardTitle}>Your Information</ThemedText>
 
         {Platform.OS === 'web' ? (
           <ThemedText style={{ textAlign: 'center' }}>
@@ -67,6 +73,19 @@ export default function HomeScreen() {
           </ThemedText>
         ) : (
           <View style={styles.formStack}>
+            <View style={styles.formGroup}>
+              <ThemedText style={styles.inputLabel}>Name</ThemedText>
+              <ThemedView style={[styles.inputField, { borderColor: Colors[theme].border }] }>
+                {/* <IconSymbol name="person.fill" size={18} color={Colors[theme].icon} style={{ marginRight: 8 }} /> */}
+                <TextInput
+                  value={name}
+                  onChangeText={setName}
+                  placeholder="Your name"
+                  placeholderTextColor={Colors[theme].icon as string}
+                  style={[styles.textInput, { color: Colors[theme].text }]}
+                />
+              </ThemedView>
+            </View>
             <View style={styles.formGroup}>
               <ThemedText style={styles.inputLabel}>Birth Date</ThemedText>
               <TouchableOpacity
@@ -203,6 +222,15 @@ const styles = StyleSheet.create({
     marginTop: 40,
     marginBottom: 12,
   },
+  themeIconBtn: {
+    position: 'absolute',
+    right: 16,
+    top: 0,
+    padding: 8,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: Colors.light.border,
+  },
   card: {
     borderWidth: 1,
     borderColor: Colors.light.border,
@@ -249,6 +277,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     textAlign: 'center',
+  },
+  textInput: {
+    fontSize: 16,
+    fontWeight: '600',
+    textAlign: 'center',
+    paddingVertical: 8,
+    paddingHorizontal: 12,
   },
   label: {
     fontWeight: '600',

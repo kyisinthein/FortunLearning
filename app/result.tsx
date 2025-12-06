@@ -2,7 +2,10 @@ import { BaziChart } from '@/components/bazi-chart';
 import { BaziInterpretation } from '@/components/bazi-interpretation';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
+import { IconSymbol } from '@/components/ui/icon-symbol';
 import { Colors, Fonts } from '@/constants/theme';
+import { useThemeController } from '@/hooks/theme-controller';
+import { useColorScheme } from '@/hooks/use-color-scheme';
 import { DeepSeekService } from '@/services/deepseek';
 import { formatInTimeZone, toDate } from 'date-fns-tz';
 import { useLocalSearchParams, useRouter } from 'expo-router';
@@ -15,7 +18,8 @@ type Gender = 'male' | 'female';
 export default function ResultScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
-  const { birthISO, tz, gender } = useLocalSearchParams<{ birthISO: string; tz: string; gender: Gender }>();
+  const { birthISO, tz, gender, name } = useLocalSearchParams<{ birthISO: string; tz: string; gender: Gender; name?: string }>();
+  const { mode, toggle } = useThemeController();
   const [chartData, setChartData] = useState<any | null>(null);
   const [interpretation, setInterpretation] = useState<string>('');
   const [dailyInsight, setDailyInsight] = useState<string>('');
@@ -48,12 +52,12 @@ export default function ResultScreen() {
         if (cancelled) return;
         setChartData(data);
 
-        const interp = await DeepSeekService.interpretBaziChart(data);
+        const interp = await DeepSeekService.interpretBaziChart(data, typeof name === 'string' ? name : undefined);
         if (cancelled) return;
         setInterpretation(interp);
 
         const todayStr = formatInTimeZone(new Date(), String(tz), 'yyyy-MM-dd');
-        const daily = await DeepSeekService.getDailyInsight(data, todayStr);
+        const daily = await DeepSeekService.getDailyInsight(data, todayStr, typeof name === 'string' ? name : undefined);
         if (cancelled) return;
         setDailyInsight(daily);
       } catch {
@@ -67,13 +71,19 @@ export default function ResultScreen() {
     return () => {
       cancelled = true;
     };
-  }, [birthDate, gender, tz]);
+  }, [birthDate, gender, tz, name]);
 
   return (
     <ThemedView style={[styles.container, { paddingTop: insets.top + 8 }] }>
       <View style={styles.header}>
         <ThemedText type="title" style={{ fontFamily: Fonts.rounded, fontSize: 26, lineHeight: 30 }}>Fortun Learning</ThemedText>
         <ThemedText style={{ textAlign: 'center', marginTop: 4 }}>Your Bazi Analysis</ThemedText>
+        {/* {typeof name === 'string' && name.trim().length > 0 && (
+          <ThemedText style={{ textAlign: 'center', marginTop: 2, fontWeight: '600' }}>{name}</ThemedText>
+        )} */}
+        <TouchableOpacity accessibilityRole="button" onPress={toggle} style={styles.themeIconBtn}>
+          <IconSymbol name={mode === 'dark' ? 'sun.max.fill' : 'moon.fill'} size={20} color={Colors[useColorScheme() ?? 'light'].icon} />
+        </TouchableOpacity>
       </View>
 
       <ScrollView contentContainerStyle={styles.scrollContent}>
@@ -86,7 +96,7 @@ export default function ResultScreen() {
         {chartData && (
           <ThemedView style={styles.results}>
             <BaziChart chartData={chartData} birthDate={birthDate} gender={String(gender) as Gender} />
-            <BaziInterpretation interpretation={interpretation} dailyInsight={dailyInsight} />
+            <BaziInterpretation interpretation={interpretation} dailyInsight={dailyInsight} loading={loading} />
             <View style={{ alignItems: 'center' }}>
               <TouchableOpacity
                 accessibilityRole="button"
@@ -111,8 +121,17 @@ const styles = StyleSheet.create({
   },
   header: {
     alignItems: 'center',
-    marginTop: 8,
+    marginTop: 30,
     marginBottom: 8,
+  },
+  themeIconBtn: {
+    position: 'absolute',
+    right: 16,
+    top: 0,
+    padding: 8,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: Colors.light.border,
   },
   scrollContent: {
     paddingBottom: 32,
