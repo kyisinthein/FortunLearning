@@ -60,7 +60,7 @@ export default function HomeScreen() {
         <ThemedText type="title" style={{ fontFamily: Fonts.rounded, fontSize: 26, lineHeight: 30 }}>Fortune Free</ThemedText>
         <ThemedText style={{ textAlign: 'center', marginTop: 4 }}>Discover Your Bazi Destiny</ThemedText>
         <TouchableOpacity accessibilityRole="button" onPress={toggle} style={[styles.themeIconBtn, { borderColor: Colors[theme].border }]}>
-          <IconSymbol name={mode === 'dark' ? 'sun.max.fill' : mode === 'light' ? 'moon.fill' : 'sparkles'} size={20} color={Colors[theme].icon} />
+          <IconSymbol name={mode === 'dark' ? 'sparkles' : mode === 'light' ? 'moon.fill' : 'sun.max'} size={20} color={Colors[theme].icon} />
         </TouchableOpacity>
       </View>
 

@@ -83,7 +83,7 @@ export default function ResultScreen() {
           <ThemedText style={{ textAlign: 'center', marginTop: 2, fontWeight: '600' }}>{name}</ThemedText>
         )} */}
         <TouchableOpacity accessibilityRole="button" onPress={toggle} style={[styles.themeIconBtn, { borderColor: Colors[theme].border }]}>
-          <IconSymbol name={mode === 'dark' ? 'sun.max.fill' : mode === 'light' ? 'moon.fill' : 'sparkles'} size={20} color={Colors[theme].icon} />
+          <IconSymbol name={mode === 'dark' ? 'sparkles' : mode === 'light' ? 'moon.fill' : 'sun.max'} size={20} color={Colors[theme].icon} />
         </TouchableOpacity>
       </View>
 

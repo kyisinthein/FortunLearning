@@ -74,7 +74,6 @@
       "reactCompiler": true
     },
     "extra": {
-      "DEEPSEEK_API_KEY": "sk-8e8b3cf59fb74f49be40ce28c96ccf49",
       "router": {},
       "eas": {
         "projectId": "77796612-8fa9-458b-a6f7-d6730be8ebd4"
