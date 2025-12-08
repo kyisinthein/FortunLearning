@@ -23,6 +23,7 @@ const MAPPING = {
   'person.fill': 'person',
   'sun.max.fill': 'wb-sunny',
   'moon.fill': 'dark-mode',
+  'sparkles': 'auto-awesome',
 } as IconMapping;
 
 /**

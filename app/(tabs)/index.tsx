@@ -57,14 +57,14 @@ export default function HomeScreen() {
     <>
     <ThemedView style={[styles.container, { paddingTop: insets.top + 8 }] }>
       <View style={styles.header}>
-        <ThemedText type="title" style={{ fontFamily: Fonts.rounded, fontSize: 26, lineHeight: 30 }}>Fortun Learning</ThemedText>
+        <ThemedText type="title" style={{ fontFamily: Fonts.rounded, fontSize: 26, lineHeight: 30 }}>Fortune Free</ThemedText>
         <ThemedText style={{ textAlign: 'center', marginTop: 4 }}>Discover Your Bazi Destiny</ThemedText>
-        <TouchableOpacity accessibilityRole="button" onPress={toggle} style={styles.themeIconBtn}>
-          <IconSymbol name={mode === 'dark' ? 'sun.max.fill' : 'moon.fill'} size={20} color={Colors[theme].icon} />
+        <TouchableOpacity accessibilityRole="button" onPress={toggle} style={[styles.themeIconBtn, { borderColor: Colors[theme].border }]}>
+          <IconSymbol name={mode === 'dark' ? 'sun.max.fill' : mode === 'light' ? 'moon.fill' : 'sparkles'} size={20} color={Colors[theme].icon} />
         </TouchableOpacity>
       </View>
 
-      <ThemedView style={styles.card}>
+      <ThemedView style={[styles.card, { borderColor: Colors[theme].border }]}>
         <ThemedText type="subtitle" style={styles.cardTitle}>Your Information</ThemedText>
 
         {Platform.OS === 'web' ? (
@@ -123,14 +123,14 @@ export default function HomeScreen() {
           <TouchableOpacity
             accessibilityRole="button"
             onPress={() => setGender('male')}
-            style={[styles.genderBtn, gender === 'male' && styles.genderBtnActive]}
+            style={[styles.genderBtn, { borderColor: Colors[theme].border }, gender === 'male' && styles.genderBtnActive]}
           >
             <ThemedText style={styles.genderText}>♂ Male</ThemedText>
           </TouchableOpacity>
           <TouchableOpacity
             accessibilityRole="button"
             onPress={() => setGender('female')}
-            style={[styles.genderBtn, gender === 'female' && styles.genderBtnActive]}
+            style={[styles.genderBtn, { borderColor: Colors[theme].border }, gender === 'female' && styles.genderBtnActive]}
           >
             <ThemedText style={styles.genderText}>♀ Female</ThemedText>
           </TouchableOpacity>
@@ -160,6 +160,7 @@ export default function HomeScreen() {
         value={date}
         mode="date"
         display="default"
+        themeVariant={theme === 'dark' || theme === 'modern' ? 'dark' : 'light'}
         onChange={(_, d) => {
           if (d) setDate(d);
           setShowDatePicker(false);
@@ -171,6 +172,7 @@ export default function HomeScreen() {
         value={time}
         mode="time"
         display="default"
+        themeVariant={theme === 'dark' || theme === 'modern' ? 'dark' : 'light'}
         onChange={(_, t) => {
           if (t) setTime(t);
           setShowTimePicker(false);
@@ -182,23 +184,25 @@ export default function HomeScreen() {
       <Modal transparent visible={showDatePicker || showTimePicker} animationType="fade">
         <View style={styles.modalBackdrop}>
           <ThemedView style={styles.modalCard}>
-            {showDatePicker && (
-              <DateTimePicker
-                value={date}
-                mode="date"
-                display="spinner"
-                onChange={(_, d) => d && setDate(d)}
-              />
-            )}
-            {showTimePicker && (
-              <DateTimePicker
-                value={time}
-                mode="time"
-                display="spinner"
-                onChange={(_, t) => t && setTime(t)}
-              />
-            )}
-            <TouchableOpacity accessibilityRole="button" style={styles.modalClose} onPress={() => { setShowDatePicker(false); setShowTimePicker(false); }}>
+          {showDatePicker && (
+            <DateTimePicker
+              value={date}
+              mode="date"
+              display="spinner"
+              textColor={Colors[theme].text}
+              onChange={(_, d) => d && setDate(d)}
+            />
+          )}
+          {showTimePicker && (
+            <DateTimePicker
+              value={time}
+              mode="time"
+              display="spinner"
+              textColor={Colors[theme].text}
+              onChange={(_, t) => t && setTime(t)}
+            />
+          )}
+            <TouchableOpacity accessibilityRole="button" style={[styles.modalClose, { borderColor: Colors[theme].border }]} onPress={() => { setShowDatePicker(false); setShowTimePicker(false); }}>
               <ThemedText style={styles.modalCloseText}>Done</ThemedText>
             </TouchableOpacity>
           </ThemedView>
@@ -313,17 +317,17 @@ const styles = StyleSheet.create({
   },
   calcBtn: {
     marginTop: 20,
-    backgroundColor: '#0a7ea4',
+    backgroundColor: '#ad491bff',
     paddingVertical: 14,
     
     borderRadius: 22,
     alignItems: 'center',
     width: '80%',
     alignSelf: 'center',
-    shadowColor: '#000',
-    shadowOpacity: 0.15,
-    shadowRadius: 10,
-    shadowOffset: { width: 0, height: 6 },
+    // shadowColor: '#000',
+    // shadowOpacity: 0.15,
+    // shadowRadius: 10,
+    // shadowOffset: { width: 0, height: 6 },
   },
   calcText: {
     color: '#fff',

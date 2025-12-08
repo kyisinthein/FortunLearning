@@ -12,7 +12,7 @@ export const unstable_settings = {
 function WithTheme({ children }: { children: React.ReactNode }) {
   const { mode } = useThemeController();
   return (
-    <ThemeProvider value={mode === 'dark' ? DarkTheme : DefaultTheme}>
+    <ThemeProvider value={mode === 'dark' || mode === 'modern' ? DarkTheme : DefaultTheme}>
       {children}
       <StatusBar style="auto" />
     </ThemeProvider>

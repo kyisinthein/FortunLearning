@@ -20,6 +20,7 @@ export default function ResultScreen() {
   const insets = useSafeAreaInsets();
   const { birthISO, tz, gender, name } = useLocalSearchParams<{ birthISO: string; tz: string; gender: Gender; name?: string }>();
   const { mode, toggle } = useThemeController();
+  const theme = useColorScheme() ?? 'light';
   const [chartData, setChartData] = useState<any | null>(null);
   const [interpretation, setInterpretation] = useState<string>('');
   const [dailyInsight, setDailyInsight] = useState<string>('');
@@ -81,8 +82,8 @@ export default function ResultScreen() {
         {/* {typeof name === 'string' && name.trim().length > 0 && (
           <ThemedText style={{ textAlign: 'center', marginTop: 2, fontWeight: '600' }}>{name}</ThemedText>
         )} */}
-        <TouchableOpacity accessibilityRole="button" onPress={toggle} style={styles.themeIconBtn}>
-          <IconSymbol name={mode === 'dark' ? 'sun.max.fill' : 'moon.fill'} size={20} color={Colors[useColorScheme() ?? 'light'].icon} />
+        <TouchableOpacity accessibilityRole="button" onPress={toggle} style={[styles.themeIconBtn, { borderColor: Colors[theme].border }]}>
+          <IconSymbol name={mode === 'dark' ? 'sun.max.fill' : mode === 'light' ? 'moon.fill' : 'sparkles'} size={20} color={Colors[theme].icon} />
         </TouchableOpacity>
       </View>
 
